@@ -1,8 +1,6 @@
 package com.scaler.lld.design.assignments.factory;
 
-public class FLACPlayer {
-    private int volume;
-    private double playBackRate;
+public class FLACPlayer extends AudioPlayer{
 
     public FLACPlayer(int volume, double playBackRate) {
         this.volume = volume;

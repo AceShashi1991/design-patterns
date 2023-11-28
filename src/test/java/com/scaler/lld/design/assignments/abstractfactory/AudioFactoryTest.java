@@ -30,7 +30,7 @@ public class AudioFactoryTest {
                 "If the abstract factory is implemented correctly, it should have 2 subtypes: MP3Factory and FLACFactory.");
 
         boolean hasSupportsType = Arrays.stream(AudioFactory.class.getDeclaredMethods())
-                .anyMatch(method -> method.getName().equals("supportsType")
+                .anyMatch(method -> method.getName().equals("supportsFormat")
                         && method.getParameterCount() == 0
                         && method.getReturnType().equals(MediaFormat.class)
                         && Modifier.isAbstract(method.getModifiers()));

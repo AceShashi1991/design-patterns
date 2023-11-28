@@ -4,8 +4,8 @@ import com.scaler.lld.design.assignments.abstractfactory.MediaFormat;
 
 public class FLACPlayer extends AudioPlayer {
 
-    public FLACPlayer(int volume, double playBackRate) {
-        super(volume, playBackRate);
+    public FLACPlayer(int volume, double playbackRate) {
+        super(volume, playbackRate);
     }
 
     @Override

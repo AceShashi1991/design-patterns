@@ -17,4 +17,5 @@ public abstract class AudioDecoder {
     public abstract MediaFormat supportsFormat();
 
     public abstract byte[] decode();
+
 }

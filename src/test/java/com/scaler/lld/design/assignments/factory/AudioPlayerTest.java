@@ -83,8 +83,7 @@ public class AudioPlayerTest {
                 .anyMatch(method -> Modifier.isStatic(method.getModifiers())
                         && method.getReturnType().equals(AudioPlayer.class)
                         && Arrays.asList(method.getParameterTypes()).contains(MediaFormat.class)
-                        && (Arrays.asList(method.getParameterTypes()).contains(int.class) || Arrays.asList(method.getParameterTypes()).contains(Integer.class))
-                        && (Arrays.asList(method.getParameterTypes()).contains(double.class) || Arrays.asList(method.getParameterTypes()).contains(Double.class)));
+                        && (Arrays.asList(method.getParameterTypes()).contains(AudioPlayer.Builder.class) || Arrays.asList(method.getParameterTypes()).contains(AudioPlayer.Builder.class)));
 
         assertTrue(hasCreateMethod,
                 "If the factory is implemented correctly, it should have a static method to create an audio player that takes three parameters: MediaFormat, int volume, and double playbackRate.");
@@ -100,29 +99,28 @@ public class AudioPlayerTest {
                 .filter(method -> Modifier.isStatic(method.getModifiers())
                         && method.getReturnType().equals(AudioPlayer.class)
                         && Arrays.asList(method.getParameterTypes()).contains(MediaFormat.class)
-                        && (Arrays.asList(method.getParameterTypes()).contains(int.class) || Arrays.asList(method.getParameterTypes()).contains(Integer.class))
-                        && (Arrays.asList(method.getParameterTypes()).contains(double.class) || Arrays.asList(method.getParameterTypes()).contains(Double.class)))
+                        && (Arrays.asList(method.getParameterTypes()).contains(AudioPlayer.Builder.class) || Arrays.asList(method.getParameterTypes()).contains(AudioPlayer.Builder.class)) )
                 .findFirst()
                 .orElse(null);
 
         assertNotNull(createMethod, "If the factory is implemented correctly, it should have a static method to create an audio player that takes three parameters: MediaFormat, int volume, and double playbackRate.");
 
         MediaFormat format = MediaFormat.FLAC;
-        int volume = 50;
-        double playbackRate = 1.0;
+        AudioPlayer.Builder builder = new AudioPlayer.Builder().setPlayBackRate(1.0)
+                .setVolume(50).build();
 
         // Invoke the create method with parameters in different orders
         AudioPlayer player = null;
 
         try {
-            player = (AudioPlayer) createMethod.invoke(null, format, volume, playbackRate);
+            player = (AudioPlayer) createMethod.invoke(null, format, builder);
         } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
             // Swallow the exception and try again with parameters in the reversed order
         }
 
         if (player == null) {
             try {
-                player = (AudioPlayer) createMethod.invoke(null, format, playbackRate, volume);
+                player = (AudioPlayer) createMethod.invoke(null, format, builder);
             } catch (IllegalAccessException | InvocationTargetException ignored) {
 
             }
